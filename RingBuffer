@@ -17,7 +17,7 @@ public class RingBuffer {
 
     // create an empty buffer, with given max capacity
     public RingBuffer(int capacity) {
-        // YOUR CODE HERE
+        rb = new double[capacity];
     }
 
     // return number of items currently in the buffer
@@ -31,7 +31,7 @@ public class RingBuffer {
     public boolean isEmpty() {
         // YOUR CODE HERE
 
-        return false; // dummy return statement so the code compiles
+        return size() == 0; // dummy return statement so the code compiles
     }
 
     // is the buffer full (size equals array capacity)?
