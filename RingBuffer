@@ -19,6 +19,8 @@ public class RingBuffer {
     public RingBuffer(int capacity) {
         rb = new double[capacity];
         size = 0;
+        first = 0;
+        last = 0;
     }
 
     // return number of items currently in the buffer
