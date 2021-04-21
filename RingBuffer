@@ -18,27 +18,22 @@ public class RingBuffer {
     // create an empty buffer, with given max capacity
     public RingBuffer(int capacity) {
         rb = new double[capacity];
+        size = 0;
     }
 
     // return number of items currently in the buffer
     public int size() {
-        // YOUR CODE HERE
-
-        return 0; // dummy return statement so the code compiles
+        return size;
     }
 
     // is the buffer empty (size equals zero)?
     public boolean isEmpty() {
-        // YOUR CODE HERE
-
-        return size() == 0; // dummy return statement so the code compiles
+        return size() == 0;
     }
 
     // is the buffer full (size equals array capacity)?
     public boolean isFull() {
-        // YOUR CODE HERE
-
-        return false; // dummy return statement so the code compiles
+        return size() == rb.length;
     }
 
     // add item x to the end
@@ -46,7 +41,12 @@ public class RingBuffer {
         if (isFull()) {
             throw new RuntimeException("Ring buffer overflow");
         }
-        // YOUR CODE HERE
+        rb[last] = x;
+        if (last == rb.length - 1) {
+            last = 0;
+        } else
+            last++;
+        size++;
     }
 
     // delete and return item from the front
@@ -54,9 +54,13 @@ public class RingBuffer {
         if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow");
         }
-        // YOUR CODE HERE
-
-        return 0.0; // dummy return statement so the code compiles
+        double n = rb[first];
+        if (first == rb.length - 1) {
+            first = 0;
+        } else
+            first++;
+        size--;
+        return n;
     }
 
     // return (but do not delete) item from the front
@@ -64,9 +68,7 @@ public class RingBuffer {
         if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow");
         }
-        // YOUR CODE HERE
-
-        return 0.0; // dummy return statement so the code compiles
+        return rb[first];
     }
 
     // a simple test of the constructor and methods in RingBuffer
@@ -86,5 +88,4 @@ public class RingBuffer {
         }
         System.out.println(buffer.peek());
     }
-
 }
