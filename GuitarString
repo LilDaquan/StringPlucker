@@ -12,40 +12,50 @@
 public class GuitarString {
 
     private RingBuffer buffer; // ring buffer
-    // YOUR OTHER INSTANCE VARIABLES HERE
+    private int ticCount;
 
     // create a guitar string of the given frequency
     public GuitarString(double frequency) {
-        // YOUR CODE HERE
+        int n = (int) Math.ceil(44100.0 / frequency);
+        this.buffer = new RingBuffer(n);
     }
 
     // create a guitar string with size & initial values given by the array
     public GuitarString(double[] init) {
-        // YOUR CODE HERE
+        this.buffer = new RingBuffer(init.length);
+        for (int i = 0; i < init.length; i++) {
+            buffer.enqueue(init[i]);
+        }
     }
 
     // pluck the guitar string by replacing the buffer with white noise
     public void pluck() {
-        // YOUR CODE HERE
+        while (!buffer.isEmpty()) {
+            double trash = buffer.dequeue();
+        }
+        while (!buffer.isFull()) {
+            buffer.enqueue(Math.random() - .5000);
+        }
     }
 
     // advance the simulation one time step
     public void tic() {
-        // YOUR CODE HERE
+        double temp = buffer.dequeue();
+        buffer.enqueue((temp + buffer.peek()) * .994 * .5);
+        ticCount++;
     }
 
     // return the current sample
     public double sample() {
-        // YOUR CODE HERE
-
-        return 0.0; // dummy return statement so the code compiles
+        if (buffer.isEmpty()) {
+            throw new RuntimeException("Ring buffer is Empty");
+        }
+        return buffer.peek();
     }
 
     // return number of times tic was called
     public int time() {
-        // YOUR CODE HERE
-
-        return 0; // dummy return statement so the code compiles
+        return ticCount;
     }
 
     public static void main(String[] args) {
