@@ -18,6 +18,8 @@ public class GuitarString {
     public GuitarString(double frequency) {
         int n = (int) Math.ceil(44100.0 / frequency);
         this.buffer = new RingBuffer(n);
+        while(!buffer.isFull()){
+            buffer.enqueue(0.0);
     }
 
     // create a guitar string with size & initial values given by the array
